@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>수학으로 연결되는 우리 반 K-pop 추천 알고리즘</title>
+  <!-- 수식 렌더링을 위한 MathJax -->
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <style>
+    :root {
+      --primary: #4f46e5;
+      --primary-hover: #4338ca;
+      --secondary: #ec4899;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text-main: #1e293b;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text-main);
+      line-height: 1.6;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 30px;
+      padding: 30px 20px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      border-radius: 16px;
+      box-shadow: 0 10px 25px -5px rgba(79, 70, 229, 0.3);
+    }
+
+    header h1 {
+      font-size: 1.8rem;
+      margin-bottom: 8px;
+    }
+
+    header p {
+      font-size: 0.95rem;
+      opacity: 0.9;
+    }
+
+    /* 탭 내비게이션 */
+    .tabs {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 24px;
+    }
+
+    .tab-btn {
+      flex: 1;
+      padding: 15px;
+      font-size: 1.05rem;
+      font-weight: 700;
+      border: 2px solid var(--border);
+      background-color: var(--card-bg);
+      color: var(--text-muted);
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .tab-btn.active {
+      border-color: var(--primary);
+      background-color: var(--primary);
+      color: white;
+    }
+
+    .tab-btn.locked {
+      background-color: #f1f5f9;
+      color: #94a3b8;
+      cursor: not-allowed;
+    }
+
+    /* 탭 콘텐츠 */
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(5px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* 점수판 */
+    .score-board {
+      background: var(--card-bg);
+      padding: 20px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      margin-bottom: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 15px;
+      position: sticky;
+      top: 10px;
+      z-index: 100;
+      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+    }
+
+    .score-info {
+      font-size: 1.1rem;
+      font-weight: 700;
+    }
+
+    .score-badge {
+      background: var(--primary);
+      color: white;
+      padding: 4px 12px;
+      border-radius: 20px;
+      margin-left: 8px;
+    }
+
+    .unlock-status {
+      font-size: 0.9rem;
+      font-weight: 600;
+      padding: 6px 14px;
+      border-radius: 8px;
+    }
+
+    .status-locked {
+      background-color: #fee2e2;
+      color: var(--danger);
+    }
+
+    .status-unlocked {
+      background-color: #d1fae5;
+      color: var(--success);
+    }
+
+    /* 퀴즈 카드 */
+    .quiz-card {
+      background: var(--card-bg);
+      padding: 24px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      margin-bottom: 20px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+    }
+
+    .quiz-q {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 16px;
+      color: var(--text-main);
+    }
+
+    .options {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .option-btn {
+      text-align: left;
+      padding: 12px 16px;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      background: #ffffff;
+      cursor: pointer;
+      font-size: 0.95rem;
+      transition: all 0.15s;
+    }
+
+    .option-btn:hover:not(:disabled) {
+      border-color: var(--primary);
+      background-color: #eef2ff;
+    }
+
+    .option-btn.correct {
+      border-color: var(--success);
+      background-color: #d1fae5;
+      color: #065f46;
+      font-weight: 700;
+    }
+
+    .option-btn.wrong {
+      border-color: var(--danger);
+      background-color: #fee2e2;
+      color: #991b1b;
+    }
+
+    .feedback-box {
+      margin-top: 14px;
+      padding: 12px 16px;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      display: none;
+    }
+
+    .feedback-hint {
+      background-color: #fef3c7;
+      border-left: 4px solid var(--warning);
+      color: #92400e;
+      display: block;
+    }
+
+    .feedback-success {
+      background-color: #d1fae5;
+      border-left: 4px solid var(--success);
+      color: #065f46;
+      display: block;
+    }
+
+    /* 탭 2: 시각적 복습 자료 스타일 */
+    .review-section {
+      background: var(--card-bg);
+      padding: 28px;
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      margin-bottom: 24px;
+    }
+
+    .step-badge {
+      display: inline-block;
+      background: #e0e7ff;
+      color: var(--primary);
+      font-weight: 700;
+      font-size: 0.85rem;
+      padding: 4px 12px;
+      border-radius: 20px;
+      margin-bottom: 10px;
+    }
+
+    .review-section h2 {
+      font-size: 1.4rem;
+      margin-bottom: 16px;
+      color: var(--text-main);
+      border-bottom: 2px solid #f1f5f9;
+      padding-bottom: 10px;
+    }
+
+    .concept-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 16px;
+      margin-top: 16px;
+    }
+
+    .concept-box {
+      background: #f8fafc;
+      padding: 18px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+    }
+
+    .concept-box h3 {
+      font-size: 1.05rem;
+      color: var(--primary);
+      margin-bottom: 8px;
+    }
+
+    .formula-card {
+      background: #1e293b;
+      color: #f8fafc;
+      padding: 20px;
+      border-radius: 12px;
+      text-align: center;
+      margin: 16px 0;
+      font-size: 1.1rem;
+      overflow-x: auto;
+    }
+
+    .sheet-func {
+      font-family: monospace;
+      background: #e2e8f0;
+      color: #0f172a;
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-weight: 700;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0;
+      font-size: 0.95rem;
+    }
+
+    th, td {
+      border: 1px solid var(--border);
+      padding: 12px;
+      text-align: center;
+    }
+
+    th {
+      background-color: #f1f5f9;
+      font-weight: 700;
+    }
+
+    .highlight-row {
+      background-color: #fef2f2;
+    }
+
+    .btn-reset {
+      background: var(--text-muted);
+      color: white;
+      border: none;
+      padding: 8px 14px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.85rem;
+    }
+    .btn-reset:hover { background: #475569; }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <header>
+    <h1>🎵 수학으로 연결되는 우리 반 K-pop 추천 알고리즘</h1>
+    <p>인공지능 수학 탐구: 10차원 벡터와 유클리드 거리 기반 협업 필터링</p>
+  </header>
+
+  <!-- 탭 버튼 -->
+  <div class="tabs">
+    <button class="tab-btn active" id="btn-tab1" onclick="switchTab('tab1')">
+      📝 탭 1. 개념 확인 퀴즈
+    </button>
+    <button class="tab-btn locked" id="btn-tab2" onclick="switchTab('tab2')">
+      🔒 탭 2. 시각적 복습 자료 (90점 이상 잠금 해제)
+    </button>
+  </div>
+
+  <!-- 탭 1: 퀴즈 영역 -->
+  <div id="tab1" class="tab-content active">
+    <div class="score-board">
+      <div class="score-info">
+        현재 점수: <span class="score-badge" id="score-display">0점</span> / 100점
+      </div>
+      <div style="display: flex; align-items: center; gap: 10px;">
+        <span class="unlock-status status-locked" id="lock-badge">🔒 복습자료 잠김 (90점 필요)</span>
+        <button class="btn-reset" onclick="resetQuiz()">다시 풀기</button>
+      </div>
+    </div>
+
+    <div id="quiz-container"></div>
+  </div>
+
+  <!-- 탭 2: 복습 자료 영역 -->
+  <div id="tab2" class="tab-content">
+    
+    <!-- 1차시 -->
+    <div class="review-section">
+      <span class="step-badge">1차시 핵심 정리</span>
+      <h2>1. 음악 취향의 수학적 표현: 10차원 벡터</h2>
+      <p>인공지능이 사람의 취향을 계산하려면 숫자(데이터)로 바꾸어야 합니다. 우리 반 대표곡 10곡에 대해 0~10점까지 점수를 매기면, 한 사람의 취향은 <strong>10개의 성분을 가진 벡터(좌표)</strong>가 됩니다.</p>
+      
+      <div class="formula-card">
+        $$\vec{A} = (a_1, a_2, a_3, \dots, a_{10})$$
+        <div style="font-size: 0.85rem; color: #94a3b8; margin-top: 8px;">(단, $a_k$는 $k$번째 대표곡에 부여한 선호도 점수)</div>
+      </div>
+
+      <div class="concept-grid">
+        <div class="concept-box">
+          <h3>📊 2차원 산점도에서 확장하기</h3>
+          <p>곡이 2개일 때는 좌표평면 $(x, y)$ 위에 점을 찍어 눈으로 가까운 친구를 찾을 수 있습니다. 곡이 10개가 되면 눈으로 볼 수 없는 <strong>10차원 공간</strong>의 한 점이 됩니다.</p>
+        </div>
+        <div class="concept-box">
+          <h3>🎯 대표곡 선정 기준</h3>
+          <p>취향 변별력을 높이기 위해 특정 장르에 치우치지 않고 <strong>다양한 장르의 곡</strong>으로 10곡을 구성해야 합니다.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2차시 -->
+    <div class="review-section">
+      <span class="step-badge">2차시 핵심 정리</span>
+      <h2>2. 취향 거리 계산: 10차원 유클리드 거리</h2>
+      <p>10차원 공간에서는 눈으로 거리를 잴 수 없으므로, 피타고라스 정리를 확장한 <strong>유클리드 거리(Euclidean Distance)</strong> 공식을 사용합니다. 거리가 <strong>0에 가까울수록</strong> 취향이 비슷한 친구입니다.</p>
+
+      <div class="formula-card">
+        $$d(\vec{A}, \vec{B}) = \sqrt{(a_1 - b_1)^2 + (a_2 - b_2)^2 + \cdots + (a_{10} - b_{10})^2}$$
+      </div>
+
+      <div class="concept-grid">
+        <div class="concept-box">
+          <h3>💻 스프레드시트 함수 활용</h3>
+          <p>각 곡의 점수 차이를 제곱하여 모두 더한 뒤 제곱근을 구합니다.</p>
+          <p style="margin-top: 8px;"><span class="sheet-func">=SQRT(SUMXMY2(내 범위, 친구 범위))</span></p>
+        </div>
+        <div class="concept-box">
+          <h3>🎧 기본 추천 알고리즘</h3>
+          <p>1. 나와 유클리드 거리가 가장 짧은 친구(이웃) 찾기<br>
+             2. 내가 아직 듣지 않은(점수가 없는) 곡 확인<br>
+             3. 그 친구가 <strong>7점 이상</strong> 높게 평가한 상위 곡 추천</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3차시 -->
+    <div class="review-section">
+      <span class="step-badge">3차시 핵심 정리</span>
+      <h2>3. 기본 알고리즘의 한계와 수학적 개선</h2>
+      <p>단순 유클리드 거리만 사용하면 <strong>개인별 점수 부여 습관(후하게 주는 사람 vs 짜게 주는 사람)</strong> 때문에 추천이 빗나갈 수 있습니다.</p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>학생</th>
+            <th>선호도 벡터 (3곡 예시)</th>
+            <th>좋아하는 순서</th>
+            <th>학생 A와의 유클리드 거리</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>학생 A (나)</strong></td>
+            <td>(9, 8, 10)</td>
+            <td>3번 &gt; 1번 &gt; 2번</td>
+            <td>0 (기준)</td>
+          </tr>
+          <tr>
+            <td><strong>학생 B</strong></td>
+            <td>(5, 4, 6)</td>
+            <td>3번 &gt; 1번 &gt; 2번 (A와 동일!)</td>
+            <td>$\sqrt{4^2 + 4^2 + 4^2} = \sqrt{48} \approx \mathbf{6.93}$</td>
+          </tr>
+          <tr class="highlight-row">
+            <td><strong>학생 C</strong></td>
+            <td>(8, 10, 7)</td>
+            <td>2번 &gt; 1번 &gt; 3번 (A와 반대!)</td>
+            <td>$\sqrt{1^2 + (-2)^2 + 3^2} = \sqrt{14} \approx \mathbf{3.74}$</td>
+          </tr>
+        </tbody>
+      </table>
+      <p style="font-size: 0.9rem; color: var(--danger); margin-bottom: 16px;">※ 취향 순서는 B가 똑같지만, 점수대가 비슷하다는 이유로 C가 더 가까운 이웃으로 뽑히는 문제 발생!</p>
+
+      <div class="concept-grid">
+        <div class="concept-box">
+          <h3>⚖️ 개선 1: 평균 중심화 (Mean Centering)</h3>
+          <p>거리를 재기 전, 각 학생의 점수에서 <strong>본인의 평균 점수</strong>를 뺍니다.<br>
+          • A 평균(9) 제외 → <strong>(0, -1, +1)</strong><br>
+          • B 평균(5) 제외 → <strong>(0, -1, +1)</strong> → 거리 <strong>0</strong> 달성!</p>
+        </div>
+        <div class="concept-box">
+          <h3>👥 개선 2: 다수 이웃 평균 (k-NN)</h3>
+          <p>가장 가까운 1명에게만 의존하지 않고, 거리가 가까운 <strong>상위 3명의 점수 평균</strong>으로 나의 예상 점수를 계산해 안정성을 높입니다.</p>
+        </div>
+        <div class="concept-box">
+          <h3>📈 개선 3: 상대적 추천 기준</h3>
+          <p>무조건 '7점 이상'이라는 절대 기준 대신, 추천해주는 <strong>'친구의 평균 점수 이상'</strong>인 곡을 추천하여 짜게 점수를 주는 친구의 데이터도 활용합니다.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  // 퀴즈 데이터 (수업 지도안 1~3차시 내용 기반)
+  const quizData = [
+    {
+      q: "1. 우리 반 대표곡 10곡에 대해 각자 0~10점의 선호도를 입력했을 때, 한 학생의 취향 데이터를 수학적으로 어떻게 표현할 수 있나요?",
+      options: [
+        "10차원의 행렬식",
+        "10차원 공간의 한 점(벡터)",
+        "10개의 일차함수 그래프",
+        "2차원 산점도의 기울기"
+      ],
+      answer: 1,
+      hint: "💡 힌트: 곡이 2개일 때 좌표평면 위의 점 (x, y)로 나타냈던 것을 10곡으로 확장해 보세요."
+    },
+    {
+      q: "2. 추천 알고리즘의 정확도를 높이기 위해 초기에 대표곡 10곡을 선정할 때 가장 적절한 기준은 무엇인가요?",
+      options: [
+        "모두 같은 가수의 최신 앨범 수록곡으로만 구성한다.",
+        "발라드 장르만 10곡을 모아서 미세한 차이를 본다.",
+        "취향 변별력을 높이기 위해 다양한 장르의 곡을 고르게 선정한다.",
+        "반 학생들이 아무도 들어보지 못한 곡으로만 구성한다."
+      ],
+      answer: 2,
+      hint: "💡 힌트: 모든 학생이 똑같은 점수를 주면 취향 차이를 구별할 수 없습니다. 다양한 취향이 드러나려면 어떻게 해야 할까요?"
+    },
+    {
+      q: "3. 두 학생 A, B의 취향이 얼마나 비슷한지 측정하기 위해 사용하는 '유클리드 거리'에 대한 설명으로 옳은 것은?",
+      options: [
+        "유클리드 거리가 클수록 두 학생의 취향이 비슷하다.",
+        "유클리드 거리가 0에 가까울수록 두 학생의 취향이 비슷하다.",
+        "유클리드 거리는 항상 음수(-) 값으로 계산된다.",
+        "10차원에서는 유클리드 거리를 수학적으로 정의할 수 없다."
+      ],
+      answer: 1,
+      hint: "💡 힌트: 두 사람이 모든 곡에 완전히 똑같은 점수를 주었다면, 점수 차이의 제곱합은 얼마가 될까요?"
+    },
+    {
+      q: "4. 구글 스프레드시트에서 내 점수 범위(B2:K2)와 친구의 점수 범위(B3:K3) 사이의 유클리드 거리를 한 번에 구하는 함수식은?",
+      options: [
+        "=AVERAGE(SUM(B2:K2, B3:K3))",
+        "=SQRT(SUMXMY2(B2:K2, B3:K3))",
+        "=COUNTIF(B2:K2, B3:K3)",
+        "=MAX(B2:K2) - MIN(B3:K3)"
+      ],
+      answer: 1,
+      hint: "💡 힌트: 두 배열의 대응하는 값의 차이를 제곱하여 더하는 함수(SUMXMY2)에 제곱근(SQRT)을 씌워야 합니다."
+    },
+    {
+      q: "5. 기본 추천 알고리즘에서 나와 가장 가까운 친구를 찾은 뒤, 나에게 곡을 추천해 주는 올바른 과정은?",
+      options: [
+        "내가 이미 10점을 준 곡을 다시 추천 목록에 넣는다.",
+        "친구가 가장 낮은 점수를 준 하위 3곡을 추천한다.",
+        "내가 아직 점수를 부여하지 않은(안 들어본) 곡 중 친구가 높게 평가한 곡을 추천한다.",
+        "친구와 나의 점수 차이가 가장 큰 곡을 추천한다."
+      ],
+      answer: 2,
+      hint: "💡 힌트: 추천 시스템의 목적은 '내가 아직 모르는 새로운 취향의 곡'을 발견해 주는 것입니다."
+    },
+    {
+      q: "6. 학생 A(9, 8, 10), 학생 B(5, 4, 6), 학생 C(8, 10, 7)일 때, 단순 유클리드 거리 계산 시 발생하는 문제점은 무엇인가요?",
+      options: [
+        "좋아하는 순서는 B가 A와 똑같지만, 점수대가 비슷한 C가 더 가까운 이웃으로 뽑힌다.",
+        "B와 C 모두 A와의 거리가 0으로 계산되어 구별할 수 없다.",
+        "점수가 낮은 B의 유클리드 거리가 음수로 계산된다.",
+        "A와 B의 좋아하는 순서가 서로 정반대임에도 가까운 이웃으로 뽑힌다."
+      ],
+      answer: 0,
+      hint: "💡 힌트: A와 B는 모두 '3번째 > 1번째 > 2번째' 순으로 곡을 좋아하지만, B는 전반적으로 점수를 짜게 주는 습관이 있습니다."
+    },
+    {
+      q: "7. 위 6번 문항처럼 개인마다 점수를 후하게 주거나 짜게 주는 '점수 습관 차이'를 해결하기 위한 수학적 방법은?",
+      options: [
+        "모든 학생의 점수에 10을 곱한다.",
+        "거리를 재기 전 각 학생의 점수에서 본인의 평균 점수를 빼는 '평균 중심화'를 한다.",
+        "가장 높은 점수를 준 곡 1개만 남기고 나머지 9곡의 데이터를 삭제한다.",
+        "점수가 5점 미만인 학생은 분석에서 제외한다."
+      ],
+      answer: 1,
+      hint: "💡 힌트: 각자의 기준점(평균)을 0으로 맞추면, 평균보다 얼마나 더 좋아하고 덜 좋아하는지 상대적인 패턴을 비교할 수 있습니다."
+    },
+    {
+      q: "8. 학생 A의 세 곡 점수가 (9, 8, 10)일 때, '평균 중심화'를 적용하여 변환한 벡터는 무엇인가요?",
+      options: [
+        "(1, 0, 2)",
+        "(0, -1, 1)",
+        "(9, 8, 10)",
+        "(-1, 0, 1)"
+      ],
+      answer: 1,
+      hint: "💡 힌트: 먼저 9, 8, 10의 평균을 구한 뒤, 각 점수에서 그 평균값을 빼보세요."
+    },
+    {
+      q: "9. 가장 가까운 이웃 '1명'의 데이터에만 의존할 때 추천이 빗나갈 위험을 줄이기 위한 개선 방법은?",
+      options: [
+        "가장 거리가 먼 1명의 점수를 참고한다.",
+        "거리가 가까운 상위 3명(여러 이웃)의 점수 평균으로 예상 점수를 계산한다.",
+        "반 전체 학생의 점수를 무작위로 섞어서 추천한다.",
+        "이웃을 찾지 않고 내가 가장 좋아하는 곡만 반복해서 듣는다."
+      ],
+      answer: 1,
+      hint: "💡 힌트: 한 명의 특이한 취향에 휘둘리지 않으려면 여러 명의 비슷한 친구들 의견을 종합(평균)해야 합니다."
+    },
+    {
+      q: "10. 점수를 전반적으로 짜게 주는 친구(최고점이 6점)로부터 좋은 곡을 추천받기 위해 수정해야 할 추천 기준은?",
+      options: [
+        "무조건 9점 이상인 곡만 추천하도록 기준을 높인다.",
+        "절대적인 점수(예: 7점 이상) 대신 '그 친구의 평균 점수 이상'인 곡을 추천한다.",
+        "그 친구가 0점을 준 곡을 추천한다.",
+        "친구의 점수를 무시하고 가나다순으로 추천한다."
+      ],
+      answer: 1,
+      hint: "💡 힌트: 평균이 4점인 친구에게 6점은 아주 높은 점수입니다. 절대 기준이 아닌 상대 기준을 적용해 보세요."
+    }
+  ];
+
+  // 상태 관리
+  let userAnswers = new Array(quizData.length).fill(null);
+  let isUnlocked = false;
+
+  // 퀴즈 렌더링
+  function renderQuiz() {
+    const container = document.getElementById('quiz-container');
+    container.innerHTML = '';
+
+    quizData.forEach((item, qIndex) => {
+      const card = document.createElement('div');
+      card.className = 'quiz-card';
+
+      const qTitle = document.createElement('div');
+      qTitle.className = 'quiz-q';
+      qTitle.textContent = item.q;
+      card.appendChild(qTitle);
+
+      const optionsDiv = document.createElement('div');
+      optionsDiv.className = 'options';
+
+      item.options.forEach((optText, oIndex) => {
+        const btn = document.createElement('button');
+        btn.className = 'option-btn';
+        btn.textContent = `${['①', '②', '③', '④'][oIndex]} ${optText}`;
+        
+        // 이미 정답을 맞힌 문제라면 버튼 비활성화 및 스타일 유지
+        if (userAnswers[qIndex] === item.answer) {
+          btn.disabled = true;
+          if (oIndex === item.answer) btn.classList.add('correct');
+        } else if (userAnswers[qIndex] === oIndex) {
+          btn.classList.add('wrong');
+        }
+
+        btn.onclick = () => handleOptionClick(qIndex, oIndex);
+        optionsDiv.appendChild(btn);
+      });
+
+      card.appendChild(optionsDiv);
+
+      // 피드백 영역 (정답 또는 힌트)
+      const feedback = document.createElement('div');
+      feedback.className = 'feedback-box';
+      feedback.id = `feedback-${qIndex}`;
+
+      if (userAnswers[qIndex] !== null) {
+        if (userAnswers[qIndex] === item.answer) {
+          feedback.className = 'feedback-box feedback-success';
+          feedback.textContent = "✅ 정답입니다! 핵심 원리를 정확히 이해했네요.";
+        } else {
+          feedback.className = 'feedback-box feedback-hint';
+          feedback.textContent = item.hint;
+        }
+      }
+
+      card.appendChild(feedback);
+      container.appendChild(card);
+    });
+
+    updateScore();
+  }
+
+  // 보기 클릭 처리
+  function handleOptionClick(qIndex, oIndex) {
+    userAnswers[qIndex] = oIndex;
+    renderQuiz();
+  }
+
+  // 점수 계산 및 잠금 해제 체크
+  function updateScore() {
+    let correctCount = 0;
+    quizData.forEach((item, idx) => {
+      if (userAnswers[idx] === item.answer) {
+        correctCount++;
+      }
+    });
+
+    const score = correctCount * 10;
+    document.getElementById('score-display').textContent = `${score}점`;
+
+    const tab2Btn = document.getElementById('btn-tab2');
+    const lockBadge = document.getElementById('lock-badge');
+
+    if (score >= 90) {
+      if (!isUnlocked) {
+        isUnlocked = true;
+        alert("🎉 축하합니다! 90점 이상을 달성하여 [탭 2. 시각적 복습 자료]가 잠금 해제되었습니다!");
+      }
+      tab2Btn.classList.remove('locked');
+      tab2Btn.innerHTML = "🔓 탭 2. 시각적 복습 자료 (잠금 해제됨)";
+      lockBadge.className = "unlock-status status-unlocked";
+      lockBadge.textContent = "🔓 복습자료 열람 가능!";
+    } else {
+      isUnlocked = false;
+      tab2Btn.classList.add('locked');
+      tab2Btn.innerHTML = "🔒 탭 2. 시각적 복습 자료 (90점 이상 잠금 해제)";
+      lockBadge.className = "unlock-status status-locked";
+      lockBadge.textContent = `🔒 복습자료 잠김 (${90 - score}점 더 필요)`;
+    }
+  }
+
+  // 탭 전환
+  function switchTab(tabId) {
+    if (tabId === 'tab2' && !isUnlocked) {
+      alert("탭 1의 개념 확인 퀴즈에서 90점 이상을 획득해야 복습 자료를 볼 수 있습니다!");
+      return;
+    }
+
+    document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+
+    document.getElementById(tabId).classList.add('active');
+    document.getElementById(`btn-${tabId}`).classList.add('active');
+
+    // 탭 2 열람 시 MathJax 수식 재렌더링
+    if (tabId === 'tab2' && window.MathJax) {
+      MathJax.typesetPromise();
+    }
+  }
+
+  // 퀴즈 초기화
+  function resetQuiz() {
+    if (confirm("퀴즈 진행 상황을 초기화하고 처음부터 다시 푸시겠습니까?")) {
+      userAnswers = new Array(quizData.length).fill(null);
+      isUnlocked = false;
+      switchTab('tab1');
+      renderQuiz();
+    }
+  }
+
+  // 초기 실행
+  renderQuiz();
+</script>
+
+</body>
+</html>
