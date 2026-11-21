@@ -37,14 +37,14 @@
     }
 
     .container {
-      max-width: 900px;
+      max-width: 960px;
       margin: 0 auto;
     }
 
     header {
       text-align: center;
-      margin-bottom: 30px;
-      padding: 30px 20px;
+      margin-bottom: 24px;
+      padding: 28px 20px;
       background: linear-gradient(135deg, var(--primary), var(--secondary));
       color: white;
       border-radius: 16px;
@@ -52,7 +52,7 @@
     }
 
     header h1 {
-      font-size: 1.8rem;
+      font-size: 1.75rem;
       margin-bottom: 8px;
     }
 
@@ -66,12 +66,14 @@
       display: flex;
       gap: 10px;
       margin-bottom: 24px;
+      flex-wrap: wrap;
     }
 
     .tab-btn {
       flex: 1;
-      padding: 15px;
-      font-size: 1.05rem;
+      min-width: 220px;
+      padding: 14px 12px;
+      font-size: 1rem;
       font-weight: 700;
       border: 2px solid var(--border);
       background-color: var(--card-bg);
@@ -82,7 +84,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 8px;
+      gap: 6px;
     }
 
     .tab-btn.active {
@@ -97,7 +99,6 @@
       cursor: not-allowed;
     }
 
-    /* 탭 콘텐츠 */
     .tab-content {
       display: none;
     }
@@ -115,7 +116,7 @@
     /* 점수판 */
     .score-board {
       background: var(--card-bg);
-      padding: 20px;
+      padding: 18px 20px;
       border-radius: 12px;
       border: 1px solid var(--border);
       margin-bottom: 24px;
@@ -171,7 +172,7 @@
     }
 
     .quiz-q {
-      font-size: 1.1rem;
+      font-size: 1.08rem;
       font-weight: 700;
       margin-bottom: 16px;
       color: var(--text-main);
@@ -234,7 +235,7 @@
       display: block;
     }
 
-    /* 탭 2: 시각적 복습 자료 스타일 */
+    /* 탭 2: 시각적 복습 자료 */
     .review-section {
       background: var(--card-bg);
       padding: 28px;
@@ -255,7 +256,7 @@
     }
 
     .review-section h2 {
-      font-size: 1.4rem;
+      font-size: 1.35rem;
       margin-bottom: 16px;
       color: var(--text-main);
       border-bottom: 2px solid #f1f5f9;
@@ -289,7 +290,7 @@
       border-radius: 12px;
       text-align: center;
       margin: 16px 0;
-      font-size: 1.1rem;
+      font-size: 1.05rem;
       overflow-x: auto;
     }
 
@@ -306,12 +307,12 @@
       width: 100%;
       border-collapse: collapse;
       margin: 16px 0;
-      font-size: 0.95rem;
+      font-size: 0.92rem;
     }
 
     th, td {
       border: 1px solid var(--border);
-      padding: 12px;
+      padding: 10px 8px;
       text-align: center;
     }
 
@@ -334,6 +335,213 @@
       font-size: 0.85rem;
     }
     .btn-reset:hover { background: #475569; }
+
+    /* 탭 3: K-pop 선호도 조사 스타일 */
+    .survey-header-card {
+      background: var(--card-bg);
+      padding: 24px;
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      margin-bottom: 20px;
+    }
+
+    .student-info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+      margin-top: 15px;
+    }
+
+    .input-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .input-group label {
+      font-weight: 700;
+      font-size: 0.9rem;
+      color: var(--text-main);
+    }
+
+    .input-group input {
+      padding: 10px 14px;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      font-size: 0.95rem;
+    }
+
+    .input-group input:focus {
+      outline: none;
+      border-color: var(--primary);
+    }
+
+    .song-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    @media (max-width: 600px) {
+      .song-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .song-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 12px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+    }
+
+    .song-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .song-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .song-genre {
+      display: inline-block;
+      font-size: 0.78rem;
+      background: #f1f5f9;
+      color: var(--text-muted);
+      padding: 2px 8px;
+      border-radius: 6px;
+      margin-top: 4px;
+    }
+
+    .yt-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      background: #fee2e2;
+      color: #dc2626;
+      text-decoration: none;
+      font-size: 0.82rem;
+      font-weight: 700;
+      padding: 6px 10px;
+      border-radius: 8px;
+      white-space: nowrap;
+      transition: background 0.15s;
+    }
+
+    .yt-link:hover {
+      background: #fecaca;
+    }
+
+    .slider-box {
+      background: #f8fafc;
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+    }
+
+    .slider-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+      font-size: 0.9rem;
+    }
+
+    .score-val-badge {
+      font-weight: 800;
+      font-size: 1rem;
+      color: var(--primary);
+      background: #e0e7ff;
+      padding: 2px 10px;
+      border-radius: 12px;
+    }
+
+    input[type="range"] {
+      width: 100%;
+      accent-color: var(--primary);
+      cursor: pointer;
+    }
+
+    .unheard-check {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 8px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      cursor: pointer;
+    }
+
+    .action-panel {
+      background: var(--card-bg);
+      padding: 24px;
+      border-radius: 16px;
+      border: 2px solid var(--primary);
+      margin-bottom: 24px;
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 16px;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .btn-primary:hover { background: var(--primary-hover); }
+
+    .btn-success {
+      background: var(--success);
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .btn-success:hover { background: #059669; }
+
+    .vector-preview {
+      margin-top: 16px;
+      padding: 14px;
+      background: #1e293b;
+      color: #38bdf8;
+      font-family: monospace;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      word-break: break-all;
+    }
+
+    .saved-records {
+      margin-top: 24px;
+      background: var(--card-bg);
+      padding: 20px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      overflow-x: auto;
+    }
   </style>
 </head>
 <body>
@@ -350,7 +558,10 @@
       📝 탭 1. 개념 확인 퀴즈
     </button>
     <button class="tab-btn locked" id="btn-tab2" onclick="switchTab('tab2')">
-      🔒 탭 2. 시각적 복습 자료 (90점 이상 잠금 해제)
+      🔒 탭 2. 복습 자료 (90점 이상 해제)
+    </button>
+    <button class="tab-btn" id="btn-tab3" onclick="switchTab('tab3')">
+      🎧 탭 3. K-pop 선호도 조사
     </button>
   </div>
 
@@ -365,46 +576,38 @@
         <button class="btn-reset" onclick="resetQuiz()">다시 풀기</button>
       </div>
     </div>
-
     <div id="quiz-container"></div>
   </div>
 
   <!-- 탭 2: 복습 자료 영역 -->
   <div id="tab2" class="tab-content">
-    
-    <!-- 1차시 -->
     <div class="review-section">
       <span class="step-badge">1차시 핵심 정리</span>
       <h2>1. 음악 취향의 수학적 표현: 10차원 벡터</h2>
-      <p>인공지능이 사람의 취향을 계산하려면 숫자(데이터)로 바꾸어야 합니다. 우리 반 대표곡 10곡에 대해 0~10점까지 점수를 매기면, 한 사람의 취향은 <strong>10개의 성분을 가진 벡터(좌표)</strong>가 됩니다.</p>
-      
+      <p>인공지능이 사람의 취향을 계산하려면 숫자(데이터)로 바꾸어야 합니다. 우리 반 대표곡에 대해 0~10점까지 점수를 매기면, 한 사람의 취향은 <strong>다차원 공간의 벡터(좌표)</strong>가 됩니다.</p>
       <div class="formula-card">
         $$\vec{A} = (a_1, a_2, a_3, \dots, a_{10})$$
         <div style="font-size: 0.85rem; color: #94a3b8; margin-top: 8px;">(단, $a_k$는 $k$번째 대표곡에 부여한 선호도 점수)</div>
       </div>
-
       <div class="concept-grid">
         <div class="concept-box">
           <h3>📊 2차원 산점도에서 확장하기</h3>
-          <p>곡이 2개일 때는 좌표평면 $(x, y)$ 위에 점을 찍어 눈으로 가까운 친구를 찾을 수 있습니다. 곡이 10개가 되면 눈으로 볼 수 없는 <strong>10차원 공간</strong>의 한 점이 됩니다.</p>
+          <p>곡이 2개일 때는 좌표평면 $(x, y)$ 위에 점을 찍어 눈으로 가까운 친구를 찾을 수 있습니다. 곡이 10개 이상이 되면 눈으로 볼 수 없는 <strong>고차원 공간</strong>의 한 점이 됩니다.</p>
         </div>
         <div class="concept-box">
           <h3>🎯 대표곡 선정 기준</h3>
-          <p>취향 변별력을 높이기 위해 특정 장르에 치우치지 않고 <strong>다양한 장르의 곡</strong>으로 10곡을 구성해야 합니다.</p>
+          <p>취향 변별력을 높이기 위해 특정 장르에 치우치지 않고 <strong>다양한 장르의 곡</strong>으로 구성해야 합니다.</p>
         </div>
       </div>
     </div>
 
-    <!-- 2차시 -->
     <div class="review-section">
       <span class="step-badge">2차시 핵심 정리</span>
-      <h2>2. 취향 거리 계산: 10차원 유클리드 거리</h2>
-      <p>10차원 공간에서는 눈으로 거리를 잴 수 없으므로, 피타고라스 정리를 확장한 <strong>유클리드 거리(Euclidean Distance)</strong> 공식을 사용합니다. 거리가 <strong>0에 가까울수록</strong> 취향이 비슷한 친구입니다.</p>
-
+      <h2>2. 취향 거리 계산: 유클리드 거리</h2>
+      <p>고차원 공간에서는 눈으로 거리를 잴 수 없으므로, 피타고라스 정리를 확장한 <strong>유클리드 거리(Euclidean Distance)</strong> 공식을 사용합니다. 거리가 <strong>0에 가까울수록</strong> 취향이 비슷한 친구입니다.</p>
       <div class="formula-card">
         $$d(\vec{A}, \vec{B}) = \sqrt{(a_1 - b_1)^2 + (a_2 - b_2)^2 + \cdots + (a_{10} - b_{10})^2}$$
       </div>
-
       <div class="concept-grid">
         <div class="concept-box">
           <h3>💻 스프레드시트 함수 활용</h3>
@@ -420,12 +623,10 @@
       </div>
     </div>
 
-    <!-- 3차시 -->
     <div class="review-section">
       <span class="step-badge">3차시 핵심 정리</span>
       <h2>3. 기본 알고리즘의 한계와 수학적 개선</h2>
       <p>단순 유클리드 거리만 사용하면 <strong>개인별 점수 부여 습관(후하게 주는 사람 vs 짜게 주는 사람)</strong> 때문에 추천이 빗나갈 수 있습니다.</p>
-
       <table>
         <thead>
           <tr>
@@ -456,8 +657,6 @@
           </tr>
         </tbody>
       </table>
-      <p style="font-size: 0.9rem; color: var(--danger); margin-bottom: 16px;">※ 취향 순서는 B가 똑같지만, 점수대가 비슷하다는 이유로 C가 더 가까운 이웃으로 뽑히는 문제 발생!</p>
-
       <div class="concept-grid">
         <div class="concept-box">
           <h3>⚖️ 개선 1: 평균 중심화 (Mean Centering)</h3>
@@ -475,29 +674,90 @@
         </div>
       </div>
     </div>
+  </div>
 
+  <!-- 탭 3: K-pop 선호도 조사 및 데이터 수집 -->
+  <div id="tab3" class="tab-content">
+    <div class="survey-header-card">
+      <span class="step-badge">데이터 수집 실습</span>
+      <h2>🎧 우리 반 K-pop 20곡 선호도 조사 (0~10점)</h2>
+      <p style="font-size: 0.92rem; color: var(--text-muted);">
+        각 곡의 <strong>[▶ 유튜브 듣기]</strong> 버튼을 눌러 하이라이트를 들어본 뒤, 선호도를 0점(매우 싫음)부터 10점(매우 좋음)까지 평가하세요. 아직 들어보지 못했거나 평가할 수 없는 곡은 <strong>'안 들어봄(빈칸 처리)'</strong>을 체크하면 추천 알고리즘 테스트에 활용할 수 있습니다.
+      </p>
+
+      <div class="student-info-grid">
+        <div class="input-group">
+          <label for="student-id">학번 (예: 20101)</label>
+          <input type="text" id="student-id" placeholder="학번을 입력하세요">
+        </div>
+        <div class="input-group">
+          <label for="student-name">이름</label>
+          <input type="text" id="student-name" placeholder="이름을 입력하세요">
+        </div>
+      </div>
+    </div>
+
+    <!-- 20곡 카드 리스트 -->
+    <div class="song-grid" id="song-list-container"></div>
+
+    <!-- 결과 확인 및 수집 패널 -->
+    <div class="action-panel">
+      <h3>📊 나의 20차원 취향 벡터 생성 및 데이터 제출</h3>
+      <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 4px;">
+        입력을 마친 후 아래 버튼을 눌러 데이터를 저장하거나 구글 스프레드시트로 전송하세요.
+      </p>
+
+      <div class="vector-preview" id="vector-preview">
+        나의 취향 벡터: [5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5]
+      </div>
+
+      <div class="btn-group">
+        <button class="btn-primary" onclick="saveAndSubmitData()">💾 데이터 저장 및 시트 전송</button>
+        <button class="btn-success" onclick="copyRowForSheets()">📋 스프레드시트 붙여넣기용 복사</button>
+        <button class="btn-reset" onclick="downloadCSV()">📥 누적 데이터 CSV 다운로드</button>
+      </div>
+      <p id="submit-status" style="margin-top: 10px; font-size: 0.9rem; font-weight: 700; color: var(--success);"></p>
+    </div>
+
+    <!-- 현재 기기에 누적된 응답 미리보기 -->
+    <div class="saved-records">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+        <h4>📑 이 브라우저에 저장된 응답 목록 (<span id="record-count">0</span>명)</h4>
+        <button class="btn-reset" onclick="clearSavedRecords()">목록 비우기</button>
+      </div>
+      <table id="records-table">
+        <thead>
+          <tr>
+            <th>학번</th>
+            <th>이름</th>
+            <th>선호도 벡터 (1번 ~ 20번 곡 순서)</th>
+          </tr>
+        </thead>
+        <tbody id="records-tbody">
+          <tr><td colspan="3" style="color: #94a3b8;">아직 저장된 데이터가 없습니다.</td></tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>
 
 <script>
-  // 퀴즈 데이터 (수업 지도안 1~3차시 내용 기반)
+  // [선생님 설정 영역] 구글 스프레드시트 Apps Script 웹앱 URL을 아래에 넣으면 자동 수집됩니다.
+  const GOOGLE_SCRIPT_URL = ""; 
+
+  // 1. 퀴즈 데이터
   const quizData = [
     {
       q: "1. 우리 반 대표곡 10곡에 대해 각자 0~10점의 선호도를 입력했을 때, 한 학생의 취향 데이터를 수학적으로 어떻게 표현할 수 있나요?",
-      options: [
-        "10차원의 행렬식",
-        "10차원 공간의 한 점(벡터)",
-        "10개의 일차함수 그래프",
-        "2차원 산점도의 기울기"
-      ],
+      options: ["10차원의 행렬식", "10차원 공간의 한 점(벡터)", "10개의 일차함수 그래프", "2차원 산점도의 기울기"],
       answer: 1,
       hint: "💡 힌트: 곡이 2개일 때 좌표평면 위의 점 (x, y)로 나타냈던 것을 10곡으로 확장해 보세요."
     },
     {
-      q: "2. 추천 알고리즘의 정확도를 높이기 위해 초기에 대표곡 10곡을 선정할 때 가장 적절한 기준은 무엇인가요?",
+      q: "2. 추천 알고리즘의 정확도를 높이기 위해 초기에 대표곡을 선정할 때 가장 적절한 기준은 무엇인가요?",
       options: [
         "모두 같은 가수의 최신 앨범 수록곡으로만 구성한다.",
-        "발라드 장르만 10곡을 모아서 미세한 차이를 본다.",
+        "발라드 장르만 모아서 미세한 차이를 본다.",
         "취향 변별력을 높이기 위해 다양한 장르의 곡을 고르게 선정한다.",
         "반 학생들이 아무도 들어보지 못한 곡으로만 구성한다."
       ],
@@ -553,7 +813,7 @@
       options: [
         "모든 학생의 점수에 10을 곱한다.",
         "거리를 재기 전 각 학생의 점수에서 본인의 평균 점수를 빼는 '평균 중심화'를 한다.",
-        "가장 높은 점수를 준 곡 1개만 남기고 나머지 9곡의 데이터를 삭제한다.",
+        "가장 높은 점수를 준 곡 1개만 남기고 나머지 곡의 데이터를 삭제한다.",
         "점수가 5점 미만인 학생은 분석에서 제외한다."
       ],
       answer: 1,
@@ -561,12 +821,7 @@
     },
     {
       q: "8. 학생 A의 세 곡 점수가 (9, 8, 10)일 때, '평균 중심화'를 적용하여 변환한 벡터는 무엇인가요?",
-      options: [
-        "(1, 0, 2)",
-        "(0, -1, 1)",
-        "(9, 8, 10)",
-        "(-1, 0, 1)"
-      ],
+      options: ["(1, 0, 2)", "(0, -1, 1)", "(9, 8, 10)", "(-1, 0, 1)"],
       answer: 1,
       hint: "💡 힌트: 먼저 9, 8, 10의 평균을 구한 뒤, 각 점수에서 그 평균값을 빼보세요."
     },
@@ -594,11 +849,36 @@
     }
   ];
 
+  // 2. K-pop 20곡 데이터
+  const kpopSongs = [
+    { id: 1, artist: "소녀시대", title: "Gee", genre: "댄스 팝", url: "http://www.youtube.com/watch?v=U7mPqycQ0tQ" },
+    { id: 2, artist: "샤이니(SHINee)", title: "View", genre: "딥하우스·댄스 팝", url: "http://www.youtube.com/watch?v=UF53cptEE5k" },
+    { id: 3, artist: "레드벨벳(Red Velvet)", title: "빨간 맛 (Red Flavor)", genre: "업템포 댄스 팝", url: "http://www.youtube.com/watch?v=WyiIGEHQP8o" },
+    { id: 4, artist: "트와이스(TWICE)", title: "Fancy", genre: "일렉트로닉 팝", url: "http://www.youtube.com/watch?v=kOHB85vDuow" },
+    { id: 5, artist: "에스파(aespa)", title: "Next Level", genre: "힙합·댄스 팝", url: "http://www.youtube.com/watch?v=4TWR90KJl84" },
+    { id: 6, artist: "빅뱅(BIGBANG)", title: "거짓말", genre: "힙합·댄스", url: "http://www.youtube.com/watch?v=2Cv3phvP8Ro" },
+    { id: 7, artist: "에픽하이(EPIK HIGH)", title: "우산 (Feat. 윤하)", genre: "힙합·발라드", url: "http://www.youtube.com/watch?v=NIPtyAKxlRs" },
+    { id: 8, artist: "지코(ZICO)", title: "아무노래", genre: "힙합·레게 톤", url: "http://www.youtube.com/watch?v=UuV2BmJ1p_I" },
+    { id: 9, artist: "딘(DEAN)", title: "D (half moon) (Feat. 개코)", genre: "알앤비·소울", url: "http://www.youtube.com/watch?v=eelfrHtmk68" },
+    { id: 10, artist: "비비(BIBI)", title: "밤양갱", genre: "어쿠스틱·팝 발라드", url: "http://www.youtube.com/watch?v=smdmEhkIRVc" },
+    { id: 11, artist: "혁오(HYUKOH)", title: "위잉위잉", genre: "인디 록", url: "http://www.youtube.com/watch?v=hr4GaRPX6cM" },
+    { id: 12, artist: "데이식스(DAY6)", title: "예뻤어", genre: "팝 록·밴드", url: "http://www.youtube.com/watch?v=BS7tz2rAOSA" },
+    { id: 13, artist: "잔나비", title: "주저하는 연인들을 위해", genre: "인디 록·레트로", url: "http://www.youtube.com/watch?v=GdoNGNe5CSg" },
+    { id: 14, artist: "실리카겔(Silica Gel)", title: "NO PAIN", genre: "사이키델릭 록·인디", url: "http://www.youtube.com/watch?v=JaIMSzE5yLA" },
+    { id: 15, artist: "QWER", title: "고민중독", genre: "팝 록·밴드", url: "http://www.youtube.com/watch?v=ImuWa3SJulY" },
+    { id: 16, artist: "아이유(IU)", title: "밤편지", genre: "어쿠스틱 발라드", url: "http://www.youtube.com/watch?v=BzYnNdJhZQw" },
+    { id: 17, artist: "성시경", title: "거리에서", genre: "발라드", url: "http://www.youtube.com/watch?v=qx4xDFP2WDU" },
+    { id: 18, artist: "원더걸스(Wonder Girls)", title: "Why So Lonely", genre: "레게 팝", url: "http://www.youtube.com/watch?v=PYGODWJgR-c" },
+    { id: 19, artist: "유키카(YUKIKA)", title: "네온 (NEON)", genre: "시티팝", url: "http://www.youtube.com/watch?v=67jSYCSrnE4" },
+    { id: 20, artist: "이달의 소녀(LOONA)", title: "Butterfly", genre: "일렉트로닉·신스 팝", url: "http://www.youtube.com/watch?v=XEOCbFJjRw0" }
+  ];
+
   // 상태 관리
   let userAnswers = new Array(quizData.length).fill(null);
   let isUnlocked = false;
+  let songRatings = new Array(kpopSongs.length).fill(5); // 기본값 5점
 
-  // 퀴즈 렌더링
+  // --- 탭 1: 퀴즈 로직 ---
   function renderQuiz() {
     const container = document.getElementById('quiz-container');
     container.innerHTML = '';
@@ -620,7 +900,6 @@
         btn.className = 'option-btn';
         btn.textContent = `${['①', '②', '③', '④'][oIndex]} ${optText}`;
         
-        // 이미 정답을 맞힌 문제라면 버튼 비활성화 및 스타일 유지
         if (userAnswers[qIndex] === item.answer) {
           btn.disabled = true;
           if (oIndex === item.answer) btn.classList.add('correct');
@@ -628,17 +907,17 @@
           btn.classList.add('wrong');
         }
 
-        btn.onclick = () => handleOptionClick(qIndex, oIndex);
+        btn.onclick = () => {
+          userAnswers[qIndex] = oIndex;
+          renderQuiz();
+        };
         optionsDiv.appendChild(btn);
       });
 
       card.appendChild(optionsDiv);
 
-      // 피드백 영역 (정답 또는 힌트)
       const feedback = document.createElement('div');
       feedback.className = 'feedback-box';
-      feedback.id = `feedback-${qIndex}`;
-
       if (userAnswers[qIndex] !== null) {
         if (userAnswers[qIndex] === item.answer) {
           feedback.className = 'feedback-box feedback-success';
@@ -648,7 +927,6 @@
           feedback.textContent = item.hint;
         }
       }
-
       card.appendChild(feedback);
       container.appendChild(card);
     });
@@ -656,19 +934,10 @@
     updateScore();
   }
 
-  // 보기 클릭 처리
-  function handleOptionClick(qIndex, oIndex) {
-    userAnswers[qIndex] = oIndex;
-    renderQuiz();
-  }
-
-  // 점수 계산 및 잠금 해제 체크
   function updateScore() {
     let correctCount = 0;
     quizData.forEach((item, idx) => {
-      if (userAnswers[idx] === item.answer) {
-        correctCount++;
-      }
+      if (userAnswers[idx] === item.answer) correctCount++;
     });
 
     const score = correctCount * 10;
@@ -680,22 +949,209 @@
     if (score >= 90) {
       if (!isUnlocked) {
         isUnlocked = true;
-        alert("🎉 축하합니다! 90점 이상을 달성하여 [탭 2. 시각적 복습 자료]가 잠금 해제되었습니다!");
+        alert("🎉 축하합니다! 90점 이상을 달성하여 [탭 2. 복습 자료]가 잠금 해제되었습니다!");
       }
       tab2Btn.classList.remove('locked');
-      tab2Btn.innerHTML = "🔓 탭 2. 시각적 복습 자료 (잠금 해제됨)";
+      tab2Btn.innerHTML = "🔓 탭 2. 복습 자료 (해제됨)";
       lockBadge.className = "unlock-status status-unlocked";
       lockBadge.textContent = "🔓 복습자료 열람 가능!";
     } else {
       isUnlocked = false;
       tab2Btn.classList.add('locked');
-      tab2Btn.innerHTML = "🔒 탭 2. 시각적 복습 자료 (90점 이상 잠금 해제)";
+      tab2Btn.innerHTML = "🔒 탭 2. 복습 자료 (90점 이상 해제)";
       lockBadge.className = "unlock-status status-locked";
       lockBadge.textContent = `🔒 복습자료 잠김 (${90 - score}점 더 필요)`;
     }
   }
 
-  // 탭 전환
+  function resetQuiz() {
+    if (confirm("퀴즈 진행 상황을 초기화하고 처음부터 다시 푸시겠습니까?")) {
+      userAnswers = new Array(quizData.length).fill(null);
+      isUnlocked = false;
+      switchTab('tab1');
+      renderQuiz();
+    }
+  }
+
+  // --- 탭 3: K-pop 선호도 조사 로직 ---
+  function renderSongList() {
+    const container = document.getElementById('song-list-container');
+    container.innerHTML = '';
+
+    kpopSongs.forEach((song, idx) => {
+      const card = document.createElement('div');
+      card.className = 'song-card';
+      card.innerHTML = `
+        <div class="song-top">
+          <div>
+            <div class="song-title">${song.id}. ${song.artist} - ${song.title}</div>
+            <span class="song-genre">${song.genre}</span>
+          </div>
+          <a href="${song.url}" target="_blank" rel="noopener noreferrer" class="yt-link">
+            ▶ 유튜브 듣기
+          </a>
+        </div>
+        <div class="slider-box">
+          <div class="slider-header">
+            <span>선호도 점수</span>
+            <span class="score-val-badge" id="val-badge-${idx}">5점</span>
+          </div>
+          <input type="range" id="slider-${idx}" min="0" max="10" step="1" value="5" oninput="handleRatingChange(${idx}, this.value)">
+          <label class="unheard-check">
+            <input type="checkbox" id="unheard-${idx}" onchange="handleUnheardToggle(${idx}, this.checked)">
+            안 들어봄 / 평가 보류 (추천 알고리즘용 빈칸 처리)
+          </label>
+        </div>
+      `;
+      container.appendChild(card);
+    });
+  }
+
+  function handleRatingChange(idx, val) {
+    songRatings[idx] = Number(val);
+    document.getElementById(`val-badge-${idx}`).textContent = `${val}점`;
+    updateVectorPreview();
+  }
+
+  function handleUnheardToggle(idx, isChecked) {
+    const slider = document.getElementById(`slider-${idx}`);
+    const badge = document.getElementById(`val-badge-${idx}`);
+    if (isChecked) {
+      slider.disabled = true;
+      songRatings[idx] = ""; // 빈칸 처리
+      badge.textContent = "미평가(빈칸)";
+      badge.style.background = "#e2e8f0";
+      badge.style.color = "#64748b";
+    } else {
+      slider.disabled = false;
+      songRatings[idx] = Number(slider.value);
+      badge.textContent = `${slider.value}점`;
+      badge.style.background = "#e0e7ff";
+      badge.style.color = "#4f46e5";
+    }
+    updateVectorPreview();
+  }
+
+  function updateVectorPreview() {
+    const formatted = songRatings.map(v => v === "" ? "null" : v).join(", ");
+    document.getElementById('vector-preview').textContent = `나의 취향 벡터: [${formatted}]`;
+  }
+
+  function getSavedRecords() {
+    return JSON.parse(localStorage.getItem('kpop_survey_records') || '[]');
+  }
+
+  function saveAndSubmitData() {
+    const studentId = document.getElementById('student-id').value.trim();
+    const studentName = document.getElementById('student-name').value.trim();
+
+    if (!studentId || !studentName) {
+      alert("학번과 이름을 모두 입력해 주세요!");
+      return;
+    }
+
+    const record = {
+      timestamp: new Date().toLocaleString('ko-KR'),
+      studentId,
+      studentName,
+      ratings: [...songRatings]
+    };
+
+    // 로컬 저장소에 저장
+    const records = getSavedRecords();
+    records.push(record);
+    localStorage.setItem('kpop_survey_records', JSON.stringify(records));
+    renderSavedRecords();
+
+    const statusEl = document.getElementById('submit-status');
+
+    // 구글 스프레드시트 Apps Script URL이 설정된 경우 전송
+    if (GOOGLE_SCRIPT_URL) {
+      statusEl.textContent = "⏳ 구글 스프레드시트로 전송 중...";
+      fetch(GOOGLE_SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(record)
+      })
+      .then(() => {
+        statusEl.textContent = `✅ ${studentName}(${studentId}) 학생의 데이터가 저장 및 스프레드시트로 전송되었습니다!`;
+      })
+      .catch(err => {
+        statusEl.textContent = "⚠️ 로컬 저장은 완료되었으나 시트 전송 중 오류가 발생했습니다.";
+      });
+    } else {
+      statusEl.textContent = `✅ ${studentName}(${studentId}) 학생의 데이터가 저장되었습니다! 아래 목록 및 CSV 다운로드를 확인하세요.`;
+    }
+  }
+
+  // 구글 스프레드시트에 바로 Ctrl+V 할 수 있도록 탭(\t) 구분 텍스트 복사
+  function copyRowForSheets() {
+    const studentId = document.getElementById('student-id').value.trim() || "학번미입력";
+    const studentName = document.getElementById('student-name').value.trim() || "이름미입력";
+    const rowText = [studentId, studentName, ...songRatings].join("\t");
+
+    navigator.clipboard.writeText(rowText).then(() => {
+      alert("📋 클립보드에 복사되었습니다!\n구글 스프레드시트 셀을 클릭하고 Ctrl+V(붙여넣기) 하세요.");
+    });
+  }
+
+  function renderSavedRecords() {
+    const records = getSavedRecords();
+    document.getElementById('record-count').textContent = records.length;
+    const tbody = document.getElementById('records-tbody');
+
+    if (records.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="3" style="color: #94a3b8;">아직 저장된 데이터가 없습니다.</td></tr>';
+      return;
+    }
+
+    tbody.innerHTML = records.map(r => `
+      <tr>
+        <td>${r.studentId}</td>
+        <td><strong>${r.studentName}</strong></td>
+        <td style="font-family: monospace; text-align: left;">[${r.ratings.map(v => v === "" ? "-" : v).join(", ")}]</td>
+      </tr>
+    `).join('');
+  }
+
+  function downloadCSV() {
+    const records = getSavedRecords();
+    if (records.length === 0) {
+      alert("다운로드할 저장된 데이터가 없습니다.");
+      return;
+    }
+
+    const headers = ["제출시각", "학번", "이름", ...kpopSongs.map(s => `${s.id}.${s.artist}-${s.title}`)];
+    const csvRows = [headers.join(",")];
+
+    records.forEach(r => {
+      const row = [
+        `"${r.timestamp}"`,
+        `"${r.studentId}"`,
+        `"${r.studentName}"`,
+        ...r.ratings
+      ];
+      csvRows.push(row.join(","));
+    });
+
+    const blob = new Blob(["\uFEFF" + csvRows.join("\n")], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "우리반_Kpop_선호도_데이터.csv";
+    a.click();
+    URL.revokeObjectURL(url);
+  }
+
+  function clearSavedRecords() {
+    if (confirm("이 브라우저에 저장된 모든 응답 기록을 삭제하시겠습니까?")) {
+      localStorage.removeItem('kpop_survey_records');
+      renderSavedRecords();
+    }
+  }
+
+  // --- 공통 탭 전환 ---
   function switchTab(tabId) {
     if (tabId === 'tab2' && !isUnlocked) {
       alert("탭 1의 개념 확인 퀴즈에서 90점 이상을 획득해야 복습 자료를 볼 수 있습니다!");
@@ -708,24 +1164,15 @@
     document.getElementById(tabId).classList.add('active');
     document.getElementById(`btn-${tabId}`).classList.add('active');
 
-    // 탭 2 열람 시 MathJax 수식 재렌더링
     if (tabId === 'tab2' && window.MathJax) {
       MathJax.typesetPromise();
     }
   }
 
-  // 퀴즈 초기화
-  function resetQuiz() {
-    if (confirm("퀴즈 진행 상황을 초기화하고 처음부터 다시 푸시겠습니까?")) {
-      userAnswers = new Array(quizData.length).fill(null);
-      isUnlocked = false;
-      switchTab('tab1');
-      renderQuiz();
-    }
-  }
-
-  // 초기 실행
+  // 초기화 실행
   renderQuiz();
+  renderSongList();
+  renderSavedRecords();
 </script>
 
 </body>
